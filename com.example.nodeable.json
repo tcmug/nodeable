@@ -1,0 +1,45 @@
+{
+  "app-id": "com.example.nodeable",
+  "runtime": "org.freedesktop.Platform",
+  "runtime-version": "18.08",
+  "sdk": "org.freedesktop.Sdk",
+  "command": "nodeable.sh",
+  "finish-args": ["--share=network"],
+  "modules": [
+
+	  {
+	    "name": "node",
+	    "sources": [
+	      {
+		"type": "git",
+		"url": "https://github.com/nodejs/node.git",
+		"branch": "v10.16.1"
+	      }
+	    ]
+	  },
+	
+        {
+            "name": "nodeable",
+            "buildsystem": "simple",
+	    "build-options": {
+	      "build-args": [ "--share=network" ]
+	    },	    
+            "build-commands": [
+		"mkdir -p /app/src",
+		"cp -rf * /app/src",
+		"install -D nodeable.sh /app/bin/nodeable.sh",
+		"cd /app/src && npm install"
+            ],
+	    "sources": [
+		{
+                    "type": "file",
+                    "path": "nodeable.sh"
+                },
+		{
+		    "type": "dir",
+		    "path": "src"
+		}
+	    ]
+        }
+    ]
+}
